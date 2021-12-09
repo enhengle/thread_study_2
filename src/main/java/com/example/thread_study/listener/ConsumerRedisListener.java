@@ -17,17 +17,16 @@ public class ConsumerRedisListener extends Thread {
 
     @Override
     public void run(){
-        int current = 0 ;
         //while循环-验证可以一直读取redis的信息
         while (true) {
             //将redis队列写死
             String result = redisTemplate.opsForList().leftPop(Code.REDISLIST);
             System.out.println(result);
-            //若消息获取为空，即弹出
-            if (result==null){
-                break;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            current++;
         }
     }
 
