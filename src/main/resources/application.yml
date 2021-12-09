@@ -4,7 +4,7 @@ spring:
   application:
     name: thread_study
   redis:
-    host: 42.194.149.38
+    host: localhost
     port: 6379
-    password: Abd12345!
+    password: Adb12345!
     database: 13

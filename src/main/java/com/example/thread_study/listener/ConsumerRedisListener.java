@@ -1,5 +1,6 @@
 package com.example.thread_study.listener;
 
+import com.example.thread_study.utils.Code;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -14,20 +15,17 @@ public class ConsumerRedisListener extends Thread {
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
-    private String queueKey = "en";
 
     @Override
     public void run(){
-        System.out.println("ConsumerRedisListener-run");
-        //while循环-验证可以一致处于运行状态
-       /* while (true) {
+        int current = 0 ;
+        //while循环-验证可以一直向redis发送消息
+        while (current<100) {
             System.out.println("ConsumerRedisListener-run");
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }e
-        }*/
+            //将redis队列写死
+            redisTemplate.opsForList().leftPush(Code.REDISLIST,"消息发送:"+current);
+            current++;
+        }
     }
 
 }
