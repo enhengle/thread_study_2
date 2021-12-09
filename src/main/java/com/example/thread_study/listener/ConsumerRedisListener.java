@@ -3,6 +3,7 @@ package com.example.thread_study.listener;
 import com.example.thread_study.utils.Code;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,19 +16,18 @@ public class ConsumerRedisListener extends Thread {
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
+    @Autowired
+    private RedisService redisService;
+
     @Override
     public void run(){
-        //while循环-验证可以一直读取redis的信息
-        while (true) {
-            //将redis队列写死
-            String result = redisTemplate.opsForList().leftPop(Code.REDISLIST);
-            System.out.println(result);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
+        try {
+            redisService.inside(Code.REDISLIST,"message:1");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
     }
 
 }
