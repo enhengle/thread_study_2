@@ -16,8 +16,8 @@ public class RedisConsumer {
     private ConsumerRedisListener listener;
 
     @Bean
-    public void one(){
-        System.out.println("2");
+    public void BeanOne(){
+        System.out.println("BeanOne");
         listener.run();
     }
 

@@ -18,9 +18,10 @@ public class ConsumerRedisListener extends Thread {
 
     @Override
     public void run(){
-        System.out.println("1");
+        System.out.println("ConsumerRedisListener-run");
+        //while循环-验证可以一致处于运行状态
        /* while (true) {
-            System.out.println("1");
+            System.out.println("ConsumerRedisListener-run");
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
