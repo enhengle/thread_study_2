@@ -15,15 +15,18 @@ public class ConsumerRedisListener extends Thread {
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
-
     @Override
     public void run(){
         int current = 0 ;
-        //while循环-验证可以一直向redis发送消息
-        while (current<100) {
-            System.out.println("ConsumerRedisListener-run");
+        //while循环-验证可以一直读取redis的信息
+        while (true) {
             //将redis队列写死
-            redisTemplate.opsForList().leftPush(Code.REDISLIST,"消息发送:"+current);
+            String result = redisTemplate.opsForList().leftPop(Code.REDISLIST);
+            System.out.println(result);
+            //若消息获取为空，即弹出
+            if (result==null){
+                break;
+            }
             current++;
         }
     }
