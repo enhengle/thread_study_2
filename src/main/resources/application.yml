@@ -1,0 +1,10 @@
+server:
+  port: 1122
+spring:
+  application:
+    name: thread_study
+  redis:
+    host: 42.194.149.38
+    port: 6379
+    password: Abd12345!
+    database: 13
