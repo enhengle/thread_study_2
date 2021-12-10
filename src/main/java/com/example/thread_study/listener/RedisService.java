@@ -1,5 +1,6 @@
 package com.example.thread_study.listener;
 
+import com.example.thread_study.utils.Code;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
@@ -16,9 +17,15 @@ public class RedisService {
     protected RedisTemplate<String,String> redisTemplate;
 
     @Async("taskExecutor")
-    public Object get(String queue) throws InterruptedException {
+    public Object get(String queue) {
         System.out.println(Thread.currentThread().getName()+"  "+System.currentTimeMillis());
         System.out.println(Thread.activeCount());
+
+        try {
+            Thread.sleep(2000);
+        }catch (Exception e){
+            System.out.println(e);
+        }
         return redisTemplate.opsForList().leftPop(queue);
     }
 
@@ -29,9 +36,15 @@ public class RedisService {
     }
 
     @Async("taskExecutor")
-    public Object inside(String queue , String message) throws InterruptedException {
-        System.out.println(Thread.currentThread().getName()+"  "+System.currentTimeMillis());
-        System.out.println(Thread.activeCount());
+    public Object inside(String queue , String message) {
+        Code.threads.put(Thread.currentThread().getName(),Thread.currentThread());
+        System.out.println(Thread.currentThread().getName()+"  "+System.currentTimeMillis()+"  "+Code.threads.size()+"  "+Code.threads);
+        try {
+            Thread.sleep(100000);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        Code.threads.remove(Thread.currentThread().getName());
         return redisTemplate.opsForList().leftPush(queue,message);
     }
 

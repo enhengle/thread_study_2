@@ -1,7 +1,9 @@
 package com.example.thread_study.web;
 
+import com.example.thread_study.utils.Code;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -14,10 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class PoolWeb {
 
     @RequestMapping(value = "close",method = RequestMethod.POST)
-    public void getPoolMessage(){
-        Thread thread = new Thread("taskExecutor--1");
-        System.out.println(thread.getName()+"  "+Thread.currentThread());
-        thread.interrupt();
+    public void getPoolMessage(@RequestParam("current")String current){
+       Code.threads.get(current).interrupt();
     }
-
+    @RequestMapping(value = "get",method = RequestMethod.POST)
+    public Object get(){
+        System.out.println(Code.threads);
+        System.out.println(Code.threads.toString());
+        return Code.threads;
+    }
 }
