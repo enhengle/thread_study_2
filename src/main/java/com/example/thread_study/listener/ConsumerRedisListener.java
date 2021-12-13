@@ -30,17 +30,17 @@ public class ConsumerRedisListener extends Thread {
             current++;
             try {
                 redisService.inside(Code.REDISLIST,"message:"+current);
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 System.out.println(e);
             }
         }
-        while (true){
+       /* while (true){
             try{
                 Thread.sleep(5000);
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
-        }
+        }*/
 
     }
 
