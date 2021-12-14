@@ -1,5 +1,6 @@
 package com.example.thread_study.web;
 
+import com.example.thread_study.aop.LogOne;
 import com.example.thread_study.utils.Code;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
@@ -19,6 +20,7 @@ import java.util.concurrent.Future;
 @RequestMapping("/pool")
 public class PoolWeb {
 
+    @LogOne
     @RequestMapping(value = "close",method = RequestMethod.POST)
     public void getPoolMessage(@RequestParam("current")String current){
        Code.threads.get(current).interrupt();
